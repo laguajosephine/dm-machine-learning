@@ -1,1 +1,22 @@
 #Question 1
+#On sépare le jeu de données
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y)
+
+
+#Question 2
+#On entraine les SVM
+
+from sklearn.svm import LinearSVC
+svm = LinearSVC(C=5).fit(X_train,y_train)
+print('Score: ',svm.score(X_test,y_test))
+
+#On fait une validation croisée sur l'échantillon d'apprentissage
+
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(svm,X_train,y_train,cv=7)
+
+#On défini un array y_test_predict
+
+y_test_predict=svm.predict(X_test)
