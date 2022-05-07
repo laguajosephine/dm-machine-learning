@@ -15,7 +15,7 @@ print('Score: ',svm.score(X_test,y_test))
 #On fait une validation croisée sur l'échantillon d'apprentissage
 
 from sklearn.model_selection import cross_val_score
-scores = cross_val_score(svm,X_train,y_train,cv=7)
+scores = cross_val_score(svm,X_train,y_train,cv=5)
 
 #On défini un array y_test_predict
 
