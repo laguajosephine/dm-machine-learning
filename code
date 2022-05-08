@@ -20,3 +20,17 @@ scores = cross_val_score(svm,X_train,y_train,cv=5)
 #On défini un array y_test_predict
 
 y_test_predict=svm.predict(X_test)
+
+
+#Question 3
+#On construit la matrice de confusion
+
+from sklearn.metrics import confusion_matrix
+confusion_matrix_test = confusion_matrix(y_test,y_test_predict)
+print(confusion_matrix_test)
+
+#On calcule la précision et le rappel
+#Je sais pas le faire avec la matrice de confusion donc là j'ai juste recopié ce que le prof a fait
+from sklearn.metrics import recall_score, precision_score
+print('Rappel: ',recall_score(y_test,y_test_predict,pos_label=0))
+print('Precision: ',precision_score(y_test,y_test_predict,pos_label=0))
