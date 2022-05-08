@@ -48,3 +48,13 @@ def false_positive_rate(y_true,y_predict,pos_label):
     return fpr
 
 print('Taux de faux positifs : ', false_positive_rate(y_test,y_test_predict,0))
+
+#QUESTION 5
+def modified_predictor(entrees, tau):
+    predictions = []
+    for k in range(len(entrees)):
+        predictions += [0]
+    for i in range(len(entrees)-1): 
+        if svm.decision_function(entrees)[i] > tau:
+            predictions[i]= 1
+    return predictions
