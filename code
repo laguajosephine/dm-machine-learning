@@ -29,8 +29,12 @@ from sklearn.metrics import confusion_matrix
 confusion_matrix_test = confusion_matrix(y_test,y_test_predict)
 print(confusion_matrix_test)
 
-#On calcule la précision et le rappel
-#Je sais pas le faire avec la matrice de confusion donc là j'ai juste recopié ce que le prof a fait
+#On calcule la précision et le rappel avec la matrice de confusion
+rappel = confusion_matrix_test[0][0]/(confusion_matrix_test[0][0]+confusion_matrix_test[0][1])
+precision = confusion_matrix_test[0][0]/(confusion_matrix_test[0][0]+confusion_matrix_test[1][0])
+print('Rappel: ',rappel, 'Precision: ',precision)
+
+#On vérifie que nos calculs étaient bons
 from sklearn.metrics import recall_score, precision_score
 print('Rappel: ',recall_score(y_test,y_test_predict,pos_label=0))
 print('Precision: ',precision_score(y_test,y_test_predict,pos_label=0))
