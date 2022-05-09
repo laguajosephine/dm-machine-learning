@@ -57,4 +57,5 @@ def modified_predictor(entrees, tau):
     for i in range(len(entrees)-1): 
         if svm.decision_function(entrees)[i] > tau:
             predictions[i]= 1
-    return predictions
+    return np.array(predictions)
+
