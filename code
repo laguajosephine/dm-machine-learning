@@ -68,6 +68,7 @@ def false_positive_rate(y_true,y_predict,pos_label):
 
 print('Taux de faux positifs : ', false_positive_rate(y_test,y_test_predict,0))
 
+
 #Question 5
 def modified_predictor(entrees, tau):
     predictions = []
@@ -78,16 +79,18 @@ def modified_predictor(entrees, tau):
             predictions[i]= 1
     return np.array(predictions)
 
+
 #Question 6
 #La meilleure courbe ROC possible vaudrait 0 en [0,1[ et 1 quand rappel=1. Donc une bonne famille de prédicteurs est une dont la courbe ROC est croissante convexe avec une asymptote en rappel=1. Au point rappel=0,95 on aurait un FPR faible.
 #Une mauvaise courbe ROC est, à l'inverse, concave avec une asymptote en FPR=1.
 
+
 #Question 7
 #première partie sur les valeurs de tau à prendre : ?
 
-#considérons une liste de 100 valeurs à essayer
+#Considérons une liste de 100 valeurs à essayer
 valeurs = []
-#calculer rappel et FPR
+#Calculer rappel et FPR
 rappel = [0]*100
 fpr = [0]*100
 for i in range(100):
@@ -97,9 +100,24 @@ for i in range(100):
 rappel
 fpr
 
-#courbe ROC
+#Tracer la courbe ROC
+from sklearn.metrics import roc_curve
 
-#QUESTION 8
+def plot_roc_curve(FPR, rappel):
+    plt.plot(FPR, rappel, label='ROC')
+    plt.plot([0, 1], [0, 1], linestyle='--')
+    plt.xlabel('Rappel')
+    plt.ylabel('False Positive Rate')
+    plt.legend()
+    plt.show()
+
+prob = model.predict_proba(X_test)
+prob = prob[:, 1]
+FPR, rappel, thresholds = roc_curve(y_test, prob)
+plot_roc_curve(rappel, FPR)
+
+
+#Question 8
 tau_fpr = []
 while i <= 100:
     if rappel[i] >= 0.95 : #rappel supérieur à 0.95
@@ -112,7 +130,7 @@ for i in range(len(tau_fpr)-1):
         min_fpr = tau_fpr[i][1] #fpr le plus faible
         tau_final = tau_fpr[i][0]
 
-#calculer le score, rappel, précision, fpr du prédicteur sur échantillon de test
+#Calculer le score, rappel, précision, fpr du prédicteur sur échantillon de test
 from sklearn import metrics #c'est pour le score
 
 predicteur_final = modified_predictor(X_test, tau_final)
