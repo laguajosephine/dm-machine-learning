@@ -68,7 +68,7 @@ def false_positive_rate(y_true,y_predict,pos_label):
 
 print('Taux de faux positifs : ', false_positive_rate(y_test,y_test_predict,0))
 
-#QUESTION 5
+#Question 5
 def modified_predictor(entrees, tau):
     predictions = []
     for k in range(len(entrees)):
@@ -78,3 +78,6 @@ def modified_predictor(entrees, tau):
             predictions[i]= 1
     return np.array(predictions)
 
+#Question 6
+#La meilleure courbe ROC possible vaudrait 0 en [0,1[ et 1 quand rappel=1. Donc une bonne famille de prédicteurs est une dont la courbe ROC est croissante convexe avec une asymptote en rappel=1. Au point rappel=0,95 on aurait un FPR faible.
+#Une mauvaise courbe ROC est, à l'inverse, concave avec une asymptote en FPR=1.
