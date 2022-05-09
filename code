@@ -9,13 +9,32 @@ X_train, X_test, y_train, y_test = train_test_split(X,y)
 #On entraine les SVM
 
 from sklearn.svm import LinearSVC
-svm = LinearSVC(C=5).fit(X_train,y_train)
+svm = LinearSVC(C=1).fit(X_train,y_train)
 print('Score: ',svm.score(X_test,y_test))
 
 #On fait une validation croisée sur l'échantillon d'apprentissage
 
-from sklearn.model_selection import cross_val_score
-scores = cross_val_score(svm,X_train,y_train,cv=5)
+from sklearn.model_selection import validation_curve
+C_range = np.logspace(-15,15,50)
+train_scores, valid_scores = validation_curve(LinearSVC(), X_train, y_train, param_name="C", param_range=C_range, cv=5)
+train_scores_mean = np.mean(train_scores,axis=1)
+valid_scores_mean = np.mean(valid_scores,axis=1)
+
+import matplotlib.pyplot as plt
+plt.plot(np.log10(C_range),train_scores_mean,label="scores d'apprentissage")
+plt.plot(np.log10(C_range),valid_scores_mean,label="scores de validation")
+plt.legend()
+plt.xlabel('log(C)')
+plt.ylabel('score')
+plt.show()
+
+#Le C_best n'est probablement pas bon, à revoir
+C_best = C_range[np.argmax(valid_scores_mean)]
+print(C_best)
+
+from sklearn.svm import LinearSVC
+svm = LinearSVC(C=C_best).fit(X_train,y_train)
+print('Score: ',svm.score(X_test,y_test))
 
 #On défini un array y_test_predict
 
