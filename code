@@ -93,7 +93,31 @@ fpr = [0]*100
 for i in range(100):
     predictions_x_train = modified_predictor(X_train, valeurs[i]) 
     rappel[i] = recall_score(X_train, predictions_x_train, pos_label = 0)
-    fpr[i] = precision_score(X_train, predictions_x_train, pos_label = 0)
+    fpr[i] = false_positive_rate("étiquette réelle??", predictions_x_train, pos_label = 0)
 rappel
 fpr
+
+#courbe ROC
+
+#QUESTION 8
+tau_fpr = []
+while i <= 100:
+    if rappel[i] >= 0.95 : #rappel supérieur à 0.95
+        tau_fpr += [valeurs[i],fpr[i]]
+
+min_fpr = 1
+tau_final = 0
+for i in range(len(tau_fpr)-1):
+    if tau_fpr[i][1] < min_fpr:
+        min_fpr = tau_fpr[i][1] #fpr le plus faible
+        tau_final = tau_fpr[i][0]
+
+#calculer le score, rappel, précision, fpr du prédicteur sur échantillon de test
+from sklearn import metrics #c'est pour le score
+
+predicteur_final = modified_predictor(X_test, tau_final)
+score_final = metrics.accuracy_score(X_test, predicteur_final)
+rappel_final = recall_score(X_test, predicteur_final, pos_label = 0)
+precision_finale = precision_score(X_test, predicteur_final, pos_label = 0)
+fpr_final = false_positive_rate("étiquette réelle", predicteur_final, pos_label = 0)
 
