@@ -145,3 +145,26 @@ rappel_final = recall_score(X_test, predicteur_final, pos_label = 0)
 precision_finale = precision_score(X_test, predicteur_final, pos_label = 0)
 fpr_final = false_positive_rate(y_test, predicteur_final, pos_label = 0)
 
+
+#Question 8 (estelle)
+
+meilleurs_tau = []
+for i in range (len(rappel)) :
+    if rappel[i]>0.95 :
+        meilleurs_tau.append(valeurs[i])
+
+tau_final = 0
+min = 100
+for i in range (len(meilleurs_tau)) :
+    if fpr[i] < min :
+        tau_final = meilleurs_tau[i]
+
+from sklearn import metrics
+predicteur_final = modified_predictor(X_test, tau_final)
+score_final = metrics.accuracy_score(y_test, predicteur_final)
+rappel_final = recall_score(y_test, predicteur_final, 0)
+precision_finale = precision_score(y_test, predicteur_final, 0)
+fpr_final = false_positive_rate(y_test, predicteur_final, 0)
+
+print ('Score: ', score_final, '; Rappel: ', rappel_final, '; Précision: ', precision_finale, '; Taux de faux positifs: ', fpr_final)
+
