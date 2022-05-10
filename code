@@ -160,11 +160,11 @@ for i in range (len(meilleurs_tau)) :
         tau_final = meilleurs_tau[i]
 
 from sklearn import metrics
-predicteur_final = modified_predictor(X_test, tau_final)
-score_final = metrics.accuracy_score(y_test, predicteur_final)
-rappel_final = recall_score(y_test, predicteur_final, 0)
-precision_finale = precision_score(y_test, predicteur_final, 0)
-fpr_final = false_positive_rate(y_test, predicteur_final, 0)
+predicteur_final = modified_predictor(X_train, tau_final)
+score_final = metrics.accuracy_score(y_train, predicteur_final)
+rappel_final = recall_score(y_train, predicteur_final, 0)
+precision_finale = precision_score(y_train, predicteur_final, 0)
+fpr_final = false_positive_rate(y_train, predicteur_final, 0)
 
 print ('Score: ', score_final, '; Rappel: ', rappel_final, '; Précision: ', precision_finale, '; Taux de faux positifs: ', fpr_final)
 
