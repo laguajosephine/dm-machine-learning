@@ -60,14 +60,15 @@ print('Precision : ',precision_score(y_test,y_test_predict,pos_label=0))
 
 
 #Question 4
-#Ici je sais pas comment intégrer pos_label dans les lignes de code
 def false_positive_rate(y_true,y_predict,pos_label):
     confusion_mat = confusion_matrix(y_true,y_predict)
-    fpr = confusion_mat[0][1]/(confusion_mat[0][1]+confusion_mat[1][1])
+    if pos_label == 0:
+        fpr = confusion_mat[0][1]/(confusion_mat[0][1]+confusion_mat[1][1])
+    if pos_label == 1:
+        fpr = confusion_mat[1][1]/(confusion_mat[1][1]+confusion_mat[0][1])
     return fpr
 
 print('Taux de faux positifs : ', false_positive_rate(y_test,y_test_predict,0))
-
 
 #Question 5
 def modified_predictor(entrees, tau):
