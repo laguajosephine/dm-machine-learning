@@ -87,7 +87,7 @@ def modified_predictor(entrees, tau):
 
 
 #Question 7
-#première partie sur les valeurs de tau à prendre : ?
+#Première partie sur les valeurs de tau à prendre : ?
 
 #Considérons une liste de 100 valeurs à essayer
 valeurs = []
@@ -95,9 +95,9 @@ valeurs = []
 rappel = [0]*100
 fpr = [0]*100
 for i in range(100):
-    predictions_x_train = modified_predictor(X_train, valeurs[i]) 
+    predictions_y_train = modified_predictor(X_train, valeurs[i]) 
     rappel[i] = recall_score(X_train, predictions_x_train, pos_label = 0)
-    fpr[i] = false_positive_rate(X_train, predictions_x_train, pos_label = 0)
+    fpr[i] = false_positive_rate(y_train, predictions_y_train, pos_label = 0)
 rappel
 fpr
 
@@ -112,7 +112,7 @@ def plot_roc_curve(FPR, rappel):
     plt.legend()
     plt.show()
 
-FPR, rappel, thresholds = roc_curve(y_test, y_test_predict)
+FPR, rappel, thresholds = roc_curve(y_train, predictions_y_train)
 plot_roc_curve(rappel, FPR)
 
 
