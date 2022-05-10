@@ -107,13 +107,10 @@ rappel = []
 fpr = []
 for i in range(100):
     predictions_y_train = modified_predictor(X_train, valeurs[i])
-    rappel.append(recall_score(y_train, predictions_y_train, pos_label = 0))
-    fpr.append(false_positive_rate(y_train, predictions_y_train, pos_label = 0))
-print(rappel)
-print(fpr)
+    rappel.append(recall_score(y_train, predictions_y_train, 0))
+    fpr.append(false_positive_rate(y_train, predictions_y_train, 0))
 
 #Tracer la courbe ROC
-
 def plot_roc_curve(rappel, FPR):
     plt.plot(rappel, FPR, label='ROC')
     plt.xlabel('Rappel')
@@ -121,7 +118,7 @@ def plot_roc_curve(rappel, FPR):
     plt.legend()
     plt.show()
     
-plot_roc_curve(rappel, list(reversed(fpr)))
+plot_roc_curve(rappel, fpr)
 
 
 #Question 8
