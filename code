@@ -15,7 +15,7 @@ print('Score: ',svm.score(X_test,y_test))
 #On fait une validation croisée sur l'échantillon d'apprentissage
 
 from sklearn.model_selection import validation_curve
-C_range = np.logspace(-15,15,50)
+C_range = np.logspace(-2,10,20)
 train_scores, valid_scores = validation_curve(LinearSVC(), X_train, y_train, param_name="C", param_range=C_range, cv=5)
 train_scores_mean = np.mean(train_scores,axis=1)
 valid_scores_mean = np.mean(valid_scores,axis=1)
