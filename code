@@ -148,7 +148,7 @@ fpr_final = false_positive_rate(y_test, predicteur_final, pos_label = 0)
 
 #Question 8 (estelle)
 
-meilleurs_tau = []
+meilleurs_tau = [] #On fait une liste avec les tau qui donnent un rappel > .95
 for i in range (len(rappel)) :
     if rappel[i]>0.95 :
         meilleurs_tau.append(valeurs[i])
