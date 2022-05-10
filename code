@@ -96,11 +96,11 @@ print(min(svm.decision_function(X_train)))
 print(max(svm.decision_function(X_train)))
 
 #Considérons une liste de 100 valeurs à essayer
+from random import *
 valeurs = []
-tau = 0
 for i in range (0,100):
-    valeurs.append(tau)
-    tau += 0.02
+    valeurs.append(uniform(min(svm.decision_function(X_train)),max(svm.decision_function(X_train))))
+valeurs.sort()
 
 #Calculer rappel et FPR
 rappel = []
