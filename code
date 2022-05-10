@@ -154,7 +154,7 @@ for i in range (len(rappel)) :
         meilleurs_tau.append(valeurs[i])
 
 tau_final = 0
-min = 100
+min = 100 #On initialise une valeur min qui est grande, comme ça ça ne nous posera pas de problèmes
 for i in range (len(meilleurs_tau)) :
     if fpr[i] < min :
         tau_final = meilleurs_tau[i]
