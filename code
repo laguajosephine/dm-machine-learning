@@ -96,7 +96,7 @@ fpr = [0]*100
 for i in range(100):
     predictions_x_train = modified_predictor(X_train, valeurs[i]) 
     rappel[i] = recall_score(X_train, predictions_x_train, pos_label = 0)
-    fpr[i] = false_positive_rate("étiquette réelle??", predictions_x_train, pos_label = 0)
+    fpr[i] = false_positive_rate(y_train, predictions_x_train, pos_label = 0)
 rappel
 fpr
 
@@ -135,5 +135,5 @@ predicteur_final = modified_predictor(X_test, tau_final)
 score_final = metrics.accuracy_score(X_test, predicteur_final)
 rappel_final = recall_score(X_test, predicteur_final, pos_label = 0)
 precision_finale = precision_score(X_test, predicteur_final, pos_label = 0)
-fpr_final = false_positive_rate("étiquette réelle", predicteur_final, pos_label = 0)
+fpr_final = false_positive_rate(y_test, predicteur_final, pos_label = 0)
 
