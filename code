@@ -70,14 +70,15 @@ def false_positive_rate(y_true,y_predict,pos_label):
 
 print('Taux de faux positifs : ', false_positive_rate(y_test,y_test_predict,0))
 
+
 #Question 5
 def modified_predictor(entrees, tau):
     predictions = []
-    for k in range(len(entrees)):
-        predictions += [0]
-    for i in range(len(entrees)-1): 
+    for i in range(len(svm.decision_function(entrees))): 
         if svm.decision_function(entrees)[i] > tau:
-            predictions[i]= 1
+            predictions.append(1)
+        else : 
+            predictions.append(0)
     return np.array(predictions)
 
 
@@ -87,40 +88,49 @@ def modified_predictor(entrees, tau):
 
 
 #Question 7
-#Première partie sur les valeurs de tau à prendre : ?
+
+#Valeur minimale de tau
+print(min(svm.decision_function(X_train)))
+
+#Valeur maximale de tau
+print(max(svm.decision_function(X_train)))
 
 #Considérons une liste de 100 valeurs à essayer
 valeurs = []
+tau = 0
+for i in range (0,100):
+    valeurs.append(tau)
+    tau += 0.02
+
 #Calculer rappel et FPR
-rappel = [0]*100
-fpr = [0]*100
+rappel = []
+fpr = []
 for i in range(100):
-    predictions_y_train = modified_predictor(X_train, valeurs[i]) 
-    rappel[i] = recall_score(X_train, predictions_y_train, pos_label = 0)
-    fpr[i] = false_positive_rate(y_train, predictions_y_train, pos_label = 0)
-rappel
-fpr
+    predictions_y_train = modified_predictor(X_train, valeurs[i])
+    rappel.append(recall_score(y_train, predictions_y_train, pos_label = 0))
+    fpr.append(false_positive_rate(y_train, predictions_y_train, pos_label = 0))
+print(rappel)
+print(fpr)
 
 #Tracer la courbe ROC
-from sklearn.metrics import roc_curve
 
-def plot_roc_curve(FPR, rappel):
-    plt.plot(FPR, rappel, label='ROC')
-    plt.plot([0, 1], [0, 1], linestyle='--')
+def plot_roc_curve(rappel, FPR):
+    plt.plot(rappel, FPR, label='ROC')
     plt.xlabel('Rappel')
     plt.ylabel('False Positive Rate')
     plt.legend()
     plt.show()
-
-FPR, rappel, thresholds = roc_curve(y_train, predictions_y_train)
-plot_roc_curve(rappel, FPR)
+    
+plot_roc_curve(rappel, list(reversed(fpr)))
 
 
 #Question 8
 tau_fpr = []
-while i <= 100:
+i = 0
+while i < 100:
     if rappel[i] >= 0.95 : #rappel supérieur à 0.95
         tau_fpr += [valeurs[i],fpr[i]]
+    i += 1
 
 min_fpr = 1
 tau_final = 0
